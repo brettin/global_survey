@@ -1,4 +1,4 @@
-<tt>
+
 plasmid_read_assembly.py takes in 3 or 4 files:
 	- fasta file of starting kmers/sequences
 	- read file 1 (read files must be fasta format)
@@ -24,4 +24,4 @@ all samples with MCS kmer hits. The kmer sequence is included because
 some samples only have matches with a single insertion or mismatch, so
 these were taken from the target sequences.
 
-</tt>
+
