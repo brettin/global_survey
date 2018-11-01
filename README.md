@@ -1,3 +1,4 @@
+
 plasmid_read_assembly.py takes in 3 or 4 files:
 	- fasta file of starting kmers/sequences
 	- read file 1 (read files must be fasta format)
