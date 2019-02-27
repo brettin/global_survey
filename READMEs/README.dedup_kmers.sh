@@ -5,9 +5,9 @@
 # each fasta record is joined into a single definition line
 # for the new fasta record.
 
-# create the kmer files, one for each addgene vector
-cd /vol/global_survey/danton/plasmid_databases/addgene_popular_top10/fna
-for n in * ; do perl ../../../kmerize.pl $n > $n.kmer.fna ; done
+# create the kmer files, assumes one fasta record per vector,
+# and multiple fasta records (vectors) per input file.
+kmerize.pl < Addgene_plasmids_min60.fa > Addgene_plasmids_min60.kmers.60
 
 # transfer addgene kmer set to bebop
 cd /vol/global_survey/danton/plasmid_databases
