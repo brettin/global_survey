@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -A PATRIC
-#SBATCH -t 16:00:00
+#SBATCH -t 8:00:00
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=12
 #SBATCH --partition=bdwall
