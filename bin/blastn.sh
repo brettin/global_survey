@@ -26,9 +26,8 @@ echo "db: $db"
 echo "qry: $qry"
 echo "out: $out"
 
-
 qry_base=$(basename $qry)
-# db_base=$(basename $db)
+db_base=$(basename $db)
 
 mkdir -p $out
 
@@ -38,7 +37,17 @@ cpid=$!
 
 
 echo "START: " `date`
-parallel -j 9 "blastn -db {} -query $qry -out $out/$qry_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -max_hsps 100 -outfmt 6" :::: $db
+
+# if db is file of filenames:
+# parallel -j 9 "blastn -db {} -query $qry -out $out/$qry_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -max_hsps 100 -outfmt 6" :::: $db
+
+# if qry is file of filenames:
+echo "executing: "
+parallel --dry-run "blastn -db $db -query {} -out $out/$db_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -outfmt 6" :::: $qry
+
+parallel -j 9 "blastn -db $db -query {} -out $out/$db_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -outfmt 6" :::: $qry
+
+
 echo "STOP: " `date`
 
 
