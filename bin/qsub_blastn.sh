@@ -9,12 +9,13 @@
 # This is used to run one job on n files.
 # The n files are listed in an input file.
 # ARG 1 is the fasta query file.
-# ARG 2 is the input file of file names.
+# ARG 2 is the input file of file names that serve as
+# databases in the search.
 # Execute using qsub -v ARG1=<val>,ARG2=<val>
 
 export PATH=$PATH:/lcrc/project/PATRIC/brettin/global_survey/bin
 
-echo "ARG1 should be the query (MCS ie)"
+echo "ARG1 should be the query"
 echo "ARG2 should be the database (each PATRIC genome ie)"
 
 echo "ARG1: $ARG1"
@@ -29,13 +30,9 @@ tmpdir=/scratch/$SLURM_JOBID
 mkdir -p $tmpdir
 
 qry=$ARG1
-file=$ARG2
+db=$ARG2
 
-# for db in `cat $file` ;  do
-#     echo "blastn.sh args: $qry $db $tmpdir"
-#     blastn.sh $qry $db $tmpdir
-# done
-blastn.sh $qry $file $tmpdir
+blastn.sh $qry $db $tmpdir
 
 find $tmpdir/ -type f -size 0 -delete
 mkdir -p $dir/$SLURM_JOBID
