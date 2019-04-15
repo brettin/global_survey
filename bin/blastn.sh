@@ -42,10 +42,15 @@ echo "START: " `date`
 # parallel -j 9 "blastn -db {} -query $qry -out $out/$qry_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -max_hsps 100 -outfmt 6" :::: $db
 
 # if qry is file of filenames:
-echo "executing: "
-parallel --dry-run "blastn -db $db -query {} -out $out/$db_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -outfmt 6" :::: $qry
+# recommend using 
+# -max_target_seqs 10000
+# -word_size 30
+# -dust no -soft_masking false
 
-parallel -j 9 "blastn -db $db -query {} -out $out/$db_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -outfmt 6" :::: $qry
+echo "executing: "
+parallel --dry-run "blastn -max_target_seqs 10000 -word_size 30 -dust no -soft_masking false -db $db -query {} -out $out/$db_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -outfmt 6" :::: $qry
+
+parallel -j 9 "blastn -max_target_seqs 10000 -word_size 30 -dust no -soft_masking false -db $db -query {} -out $out/$db_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -outfmt 6" :::: $qry
 
 
 echo "STOP: " `date`
