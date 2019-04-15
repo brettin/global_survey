@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -A PATRIC
+#SBATCH -A GENENG-IND 
 #SBATCH -t 4:00:00
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=12
