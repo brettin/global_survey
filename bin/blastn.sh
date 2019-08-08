@@ -48,9 +48,9 @@ echo "START: " `date`
 # -dust no -soft_masking false
 
 echo "executing: "
-parallel --dry-run "blastn -max_target_seqs 10000 -word_size 30 -dust no -soft_masking false -db $db -query {} -out $out/$db_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -outfmt 6" :::: $qry
+parallel --dry-run "blastn -max_target_seqs 100000 -word_size 30 -dust no -soft_masking false -db $db -query {} -out $out/$db_base.{/}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 8 -outfmt 6" :::: $qry
 
-parallel -j 9 "blastn -max_target_seqs 10000 -word_size 30 -dust no -soft_masking false -db $db -query {} -out $out/$db_base.{/.}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 3 -outfmt 6" :::: $qry
+parallel -j 4 "blastn -max_target_seqs 100000 -word_size 30 -dust no -soft_masking false -db $db -query {} -out $out/$db_base.{/}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 8 -outfmt 6" :::: $qry
 
 
 echo "STOP: " `date`
