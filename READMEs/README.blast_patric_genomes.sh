@@ -44,6 +44,14 @@ rm genomes.list
 # input runs in about 47 minutes on bebop.
 for n in genomes.list* ; do qsub -v ARG1=$HOME/PATRIC/brettin/global_survey/brettin/allen/mcs.unique.60.fa,ARG2=$n $HOME/PATRIC/brettin/global_survey/bin/qsub_blastn.sh ; sleep 1 ; done
 
+# This change runs 4 jobs in parallel using 8 cores per job.
+# This change supports SLURM over PBS because it appears PBS
+# is no longer supported 2019-04-16
+for n genomes.list* ; do sbatch --export ARG1=$n,ARG2=/blues/gpfs/globalscratch/brettin/Addgene_plasmids_min60.kmers.60v2.dedup.1 $HOME/PATRIC/brettin/global_survey/bin/sbatch_blastn.sh ; sleep 1 ; done
+
+
+
+
 
 # create a file with a list of all the gene ffn files
 ls genes > genes.dirs 
