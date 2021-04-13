@@ -1,10 +1,16 @@
 #!/bin/bash
 
 #SBATCH -A GENENG-IND 
-#SBATCH -t 4:00:00
+#SBATCH -t 1:00:00
 #SBATCH -N 1
-#SBATCH --ntasks-per-node=12
 #SBATCH --partition=bdwall
+
+# -t was set to 16 to do the longest running
+# fastq metagenome files against the full addgene
+# kmer set.
+
+# -t was set to 4 to run the full set of 
+# patric genomes
 
 # This is used to run one job on n files.
 # The n files are listed in an input file.
