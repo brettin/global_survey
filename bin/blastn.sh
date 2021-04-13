@@ -5,7 +5,7 @@
 
 export PATH=$HOME/vagrant_builds/vagrant_blast/ncbi-blast-2.7.1+/bin:$PATH
 export PATH=$HOME/local/bin:$PATH
-
+export PATH=$HOME/seqtk:$PATH
 echo "slurm job id: $SLURM_JOBID"
 echo "slurm node id: $SLURM_NODEID"
 
@@ -29,8 +29,9 @@ echo "out: $out"
 qry_base=$(basename $qry)
 db_base=$(basename $db)
 
+echo "mkdir -p $out"
 mkdir -p $out
-
+ls -l $out
 
 top -b -n 600 -d 10 -u $USER > $SLURM_JOBID.$HOST.$$.top &
 cpid=$!
@@ -49,12 +50,17 @@ echo "START: " `date`
 
 echo "executing: "
 parallel --dry-run "blastn -max_target_seqs 100000 -word_size 30 -dust no -soft_masking false -db $db -query {} -out $out/$db_base.{/}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 8 -outfmt 6" :::: $qry
+# This is for running PATRIC genomes against a kmer database
 
 parallel -j 4 "blastn -max_target_seqs 100000 -word_size 30 -dust no -soft_masking false -db $db -query {} -out $out/$db_base.{/}.blastn.$SLURM_JOBID -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 8 -outfmt 6" :::: $qry
 
+# This modification was added so that gzip'd fastq files (qry) could be searched against the Addgene kmers (db)
+# parallel --dry-run "zcat {} | seqtk seq -A - | blastn -query - -db /lcrc/project/PATRIC/brettin/global_survey/databases/Addgene_plasmids_min60.kmers.1occ.final -max_target_seqs 10000 -word_size 30 -dust no -soft_masking false -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 4 -outfmt 6 | gzip -c  >  $out/$db_base.{/}.blastn.$SLURM_JOBID.out.gz" :::: $qry
+
+# parallel -j 9 "zcat {} | seqtk seq -A - | blastn -query - -db /lcrc/project/PATRIC/brettin/global_survey/databases/Addgene_plasmids_min60.kmers.1occ.final -max_target_seqs 10000 -word_size 30 -dust no -soft_masking false -perc_identity 0.98 -qcov_hsp_perc 1.0 -num_threads 4 -outfmt 6 | gzip -c  >  $out/$db_base.{/}.blastn.$SLURM_JOBID.out.gz" :::: $qry
 
 echo "STOP: " `date`
 
 
 kill -9 $cpid
-
+export PATH=$HOME/seqtk:$PATH
