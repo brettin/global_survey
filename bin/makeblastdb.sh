@@ -1,4 +1,5 @@
-
+# $1 is number of parallel threads, use 72
+# $2 is the file list of genomes
 
 
 
