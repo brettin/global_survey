@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -A GENENG-IND 
-#SBATCH -t 4:00:00
+#SBATCH -t 12:00:00
 #SBATCH -N 1
 #SBATCH --partition=bdwall
 
