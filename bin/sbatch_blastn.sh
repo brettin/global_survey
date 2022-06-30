@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -A GENENG-IND 
-#SBATCH -t 1:00:00
+#SBATCH -t 4:00:00
 #SBATCH -N 1
 #SBATCH --partition=bdwall
 
@@ -19,7 +19,7 @@
 # databases in the search.
 # Execute using qsub -v ARG1=<val>,ARG2=<val>
 
-export PATH=$PATH:/lcrc/project/PATRIC/brettin/global_survey/bin
+export PATH=$PATH:/lcrc/project/GENENG-IND/brettin/global_survey/bin
 
 echo "ARG1 should be the query"
 echo "ARG2 should be the database (each PATRIC genome ie)"
