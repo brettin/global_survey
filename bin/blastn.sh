@@ -3,9 +3,13 @@
 # usage arg1=query, arg2=db
 # log filecreated
 
-export PATH=$HOME/vagrant_builds/vagrant_blast/ncbi-blast-2.7.1+/bin:$PATH
-export PATH=$HOME/local/bin:$PATH
-export PATH=$HOME/seqtk:$PATH
+#export PATH=$HOME/vagrant_builds/vagrant_blast/ncbi-blast-2.7.1+/bin:$PATH
+#export PATH=$HOME/local/bin:$PATH
+#export PATH=$HOME/seqtk:$PATH
+export PATH=/home/brettin/vagrant_builds/vagrant_blast/ncbi-blast-2.7.1+/bin:$PATH
+export PATH=/home/brettin/local/bin:$PATH
+export PATH=/home/brettin/seqtk:$PATH
+
 echo "slurm job id: $SLURM_JOBID"
 echo "slurm node id: $SLURM_NODEID"
 
